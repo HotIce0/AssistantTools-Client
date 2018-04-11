@@ -1,4 +1,4 @@
-// pages/index/index.js
+// pages/tools/attendance-record/attendance_record.js
 Page({
 
   /**

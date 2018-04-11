@@ -1,0 +1,41 @@
+/* pages/tools/index.wxss */
+page {
+  background: #F2F2F2;
+  display: flex;
+  flex-direction: column;
+}
+
+.container-scroll{
+  width: 100%;
+  height: 100%;
+}
+
+.panel{
+  background: #FFFFFF;
+}
+
+.panel .panel-header{
+  padding: 8rpx; 
+  border-left: 8rpx solid #ccc!important;
+  border-color: #0099FF!important;
+  margin: 10rpx;
+  width: 100%;
+  font-size: 35rpx;
+}
+
+.panel .panel-body{
+  background: #FFFFFF;
+}
+
+/* tool图标 */
+.panel .panel-body .tool-item{
+  margin: 46.875rpx;/*46.875rpx;*/
+  height: 93.75rpx;
+  width: 93.75rpx;
+}
+
+.panel .panel-footer{
+  float: right;
+}
+
+

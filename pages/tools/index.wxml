@@ -1,0 +1,50 @@
+<!--pages/tools/index.wxml-->
+<scroll-view class='container-scroll'>
+
+  <!--INFO SWIPERBOX START  -->
+  <view class='panel'>
+    <view class='panel-body'>
+      <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+        <block wx:for="{{imgUrls}}">
+          <swiper-item>
+            <image src="{{item}}" class="slide-image" height="150rpx" mode='scaleToFill' style='width:750rpx'/>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+  </view>
+  <!--INFO SWIPERBOX END  -->
+
+  <!--INFORM BOX START  -->
+  <view class='panel'>
+
+    <view class='panel-header'>
+      <text>提醒</text>
+    </view>
+  
+    <view class='panel_body'>
+      <!--这里放一个通知的图标  -->
+      <!--这里从通知表中查出两条记录，并显示通知时间是多少之前  -->
+      <!--提供点击跳转到通知页面  -->
+      <text>测试提醒</text>
+    </view>
+  </view>
+  <!--INFORM BOX END  -->
+
+  <!-- TOOLBOX START  -->
+   <view class='panel'>
+
+    <view class='panel-header'>
+      <text>适合你的功能</text>
+    </view>
+
+    <view class='panel-body'>
+      <image class='tool-item' src='../../images/icon_all.png'></image>
+      <image class='tool-item' src='../../images/icon_all.png'></image>
+      <image class='tool-item' src='../../images/icon_all.png'></image>
+      <image class='tool-item' src='../../images/icon_all.png'></image>
+    </view>
+
+  </view> 
+  <!--TOOLBOX END   -->
+</scroll-view>

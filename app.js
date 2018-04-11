@@ -1,63 +1,73 @@
 var client = require('./vendor/miniprogram-laravel-sdk/index.js');
 var Session = require('./vendor/miniprogram-laravel-sdk/lib/session.js');
+var Util = require('./utils/util.js');
+var Config = require('./config.js');
 //app.js
 App({
   onLaunch: function () {
-    //登陆测试
-    // client.login({
-    //   loginUrl: 'http://localhost/AssistantTools/public/miniprogram/login',
-    //   success: function (userInfo) {
-    //     console.log(userInfo);
-    //     console.log(Session.get());
-    //   },
-    //   fail: function (error) {
-    //     console.log(error);
-    //   },
-    // });
-    client.setLoginUrl('http://localhost/AssistantTools/public/miniprogram/login');
-    // //请求测试
-    client.request({
-      url: 'http://localhost/AssistantTools/public/miniprogram/textRequest',
-      success: function (res) {
-      },
-      fail: function (error) {
-      }
-    });
-    
-
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
-    // 获取用户信息
+    //判断是否拥有用户信息授权
     wx.getSetting({
       success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
+        if(res.authSetting["scope.userInfo"]){
+          //用户信息已经授权,登陆到服务器
+          wx.showLoading({
+            title: '登陆中',
+            mask: true,
             success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-              
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
+              client.login({
+                loginUrl: Config.service.loginUrl,
+                success: userInfo => {
+                  this.globalData.userInfo = JSON.parse(userInfo);
+                  wx.hideLoading();
+                },
+                fail: function (error) {
+                  Util.showModel("登陆失败", error)
+                  wx.hideLoading();
+                },
+              });
             }
           })
         }
       }
     })
+    //登陆到服务器
+    // wx.showLoading({
+    //   title: '登陆中',
+    //   mask: true,
+    //   success: res => {
+    //     client.login({
+    //       loginUrl: Config.service.loginUrl,
+    //       success: userInfo => {
+    //         this.globalData.userInfo = JSON.parse(userInfo);
+    //         wx.hideLoading();
+    //       },
+    //       fail: function (error) {
+    //         Util.showModel("登陆失败", error)
+    //         wx.hideLoading();
+    //       },
+    //     });
+    //   }
+    // })
+    
+    
+    
+    
+
+    // client.setLoginUrl('http://localhost/AssistantTools/public/miniprogram/login');
+    // //请求测试
+    // client.request({
+    //   url: 'http://localhost/AssistantTools/public/miniprogram/textRequest',
+    //   success: function (res) {
+    //     console.log(res);
+    //   },
+    //   fail: function (error) {
+    //   }
+    // });
   },
   globalData: {
-    userInfo: null
+    /* 用户信息 */
+    userInfo: null,
+    /* 微信用户是否已经绑定了(学生或老师)用户信息 */
+    userIsBinded: false,
   },
 })

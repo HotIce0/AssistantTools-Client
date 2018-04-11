@@ -1,0 +1,11 @@
+<!--pages/user/user.wxml-->
+<scroll-view class='container-scroll'>
+  <view class='userinfo-bar'>
+    <button wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" style='width:750rpx;'>登陆</button>
+    <block wx:else>
+      <!--点击头像进入信息编辑页面  -->
+      <image bindtap='' class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text>{{userInfo.nickName}}</text>
+    </block>
+  </view>
+</scroll-view>
