@@ -1,11 +1,66 @@
 <!--pages/user/user.wxml-->
 <scroll-view class='container-scroll'>
+  <!-- WX USERINFO BAR START  -->
   <view class='userinfo-bar'>
-    <button wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" style='width:750rpx;'>登陆</button>
+    <button id='btn-login' wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" style='width:750rpx;'>登陆</button>
     <block wx:else>
-      <!--点击头像进入信息编辑页面  -->
+      <!--待添加 点击头像进入信息编辑页面  -->
       <image bindtap='' class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
       <text>{{userInfo.nickName}}</text>
     </block>
   </view>
+  <!-- WX USERINFO BAR END  -->
+  <!--未登录时  -->
+  <view wx:if="{{!hasUserInfo}}" class='panel'>
+    <view class='panel-body' style='margin-top:15rpx!important;'>
+      <view class='panel-body-menuitem'>
+        <view class='panel-body-menuitem-icon'>
+          <image mode='aspectFill' src='../../images/inform_active.png'></image>
+        </view>
+        <view class='panel-body-menuitem-text'>
+          <text>登陆后更多精彩内容!</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!--登陆后  -->
+  <view wx:else class='panel'>
+    <view class='panel-body' style='margin-top:15rpx!important;'>
+      <!--已经绑定用户信息  -->
+      <block wx:if="{{userIsBinded}}">
+        <view class='panel-body-menuitem'>
+          <view class='panel-body-menuitem-icon'>
+            <image mode='aspectFill' src='../../images/icon_home.png'></image>
+          </view>
+
+          <view class='panel-body-menuitem-text'>
+            <text>已经绑定</text>
+          </view>
+
+          <view>
+            <view class='right-arrow'></view>
+          </view>
+        </view>
+      </block>
+      <!--未绑定用户信息  -->
+      <block wx:else>
+        <navigator url="/pages/user/bind/bind">
+          <view class='panel-body-menuitem'>
+            <view class='panel-body-menuitem-icon'>
+              <image mode='aspectFill' src='../../images/icon_home.png'></image>
+            </view>
+
+            <view class='panel-body-menuitem-text'>
+              <text>去绑定(学生/教师)信息</text>
+            </view>
+
+            <view>
+              <view class='right-arrow'></view>
+            </view>
+          </view>
+        </navigator>
+      </block>
+    </view>
+  </view>
+
 </scroll-view>

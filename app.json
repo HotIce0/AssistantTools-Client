@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/user/bind/bind",
     "pages/index/index",
     "pages/user/user",
     "pages/tools/index",
@@ -20,14 +21,20 @@
     "backgroundColor": "#FFFFFF",
     "list": [
       {
+        "iconPath": "./images/index.png",
+        "selectedIconPath": "./images/index_selected.png",
         "pagePath": "pages/index/index",
         "text": "首页"
       },
       {
+        "iconPath": "./images/assistant.png",
+        "selectedIconPath": "./images/assistant_selected.png",
         "pagePath": "pages/tools/index",
         "text": "小助手"
       },
       {
+        "iconPath": "./images/my.png",
+        "selectedIconPath": "./images/my_selected.png",
         "pagePath": "pages/user/user",
         "text": "我"
       }

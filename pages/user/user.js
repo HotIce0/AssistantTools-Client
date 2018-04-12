@@ -1,7 +1,8 @@
 // pages/user/user.js
-var client = require('../../vendor/miniprogram-laravel-sdk/index.js');
-var Util = require('../../utils/util.js');
-var Config = require('../../config.js');
+var client = require('../../vendor/miniprogram-laravel-sdk/index.js')
+var Util = require('../../utils/util.js')
+var Config = require('../../api/config.js')
+var ATAPI = require('../../api/AssistantToolsAPI.js')
 //获取应用实例
 var app = getApp()
 
@@ -13,6 +14,7 @@ Page({
   data: {
     userInfo: {},
     hasUserInfo: false,
+    userIsBinded: false,
   },
 
   /**
@@ -23,6 +25,12 @@ Page({
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true,
+      })
+    }
+
+    if (app.globalData.userIsBinded) {
+      this.setData({
+        userIsBinded: app.globalData.userIsBinded,
       })
     }
   },
@@ -49,7 +57,26 @@ Page({
                 userInfo: app.globalData.userInfo,
                 hasUserInfo: true,
               })
-              //访问接口判断，微信用户是否已经绑定（学生或老师）用户
+
+              //获取用户绑定状态
+              wx.showLoading({
+                title: '获取绑定状态中',
+                mask: true,
+                success: res => {
+                  //判断用户是否已经绑定平台账号
+                  ATAPI.isBinded({
+                    success: res => {
+                      //保存绑定状态
+                      app.globalData.userIsBinded = res;
+                      wx.hideLoading();
+                    },
+                    fail: error => {
+                      Util.showModel("获取绑定状态失败", error);
+                      wx.hideLoading();
+                    }
+                  });
+                }
+              })
             },
             fail: function (error) {
               Util.showModel("登陆失败", error)
