@@ -21,7 +21,7 @@ var isBinded = function(options) {
   options = Utils.extend({}, defaultOptions, options);
   //调用绑定状态查询接口
   Client.request({
-    url: Config.service.host + '/miniprogram/bind/getBindStatus',
+    url: Config.service.host + '/api/bind/getBindStatus',
     success: res => {
       var bindstatus = res.data.bindstatus;
       options.success(bindstatus);
@@ -31,10 +31,28 @@ var isBinded = function(options) {
     }
   });
 };
-
+/**
+ * 绑定平台账号
+ */
 var bind = function(options) {
   options = Utils.extend({}, defaultOptions, options);
-  
+  //调用服务器平台账号绑定接口
+  Client.request({
+    // /miniprogram/bind/bind
+    url: Config.service.host + '/api/bind/bind',
+    method: "POST",
+    data: {
+      "userName": options.userName,
+      "password": options.password,
+    },
+    success: res => {
+      var data = res.data;
+      options.success(data);
+    },
+    fail: function (error) {
+      options.fail(error);
+    }
+  });
 };
 
 module.exports = {

@@ -8,6 +8,7 @@ page {
 .container-scroll{
   width: 100%;
   height: 100%;
+  background: #F2F2F2;
 }
 
 .userinfo-bar{

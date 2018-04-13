@@ -27,7 +27,6 @@ Page({
         hasUserInfo: true,
       })
     }
-
     if (app.globalData.userIsBinded) {
       this.setData({
         userIsBinded: app.globalData.userIsBinded,
@@ -68,6 +67,9 @@ Page({
                     success: res => {
                       //保存绑定状态
                       app.globalData.userIsBinded = res;
+                      this.setData({
+                        userIsBinded: true,
+                      })
                       wx.hideLoading();
                     },
                     fail: error => {

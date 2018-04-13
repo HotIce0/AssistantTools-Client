@@ -3,14 +3,14 @@
  */
 
 // 主机域名
-var host = 'http://localhost/AssistantTools/public';
+var host = 'http://192.168.0.100/AssistantTools/public';
 
 var config = {
   service: {
     host,
 
     // 登录地址，用于建立会话
-    loginUrl: `${host}/miniprogram/login`,
+    loginUrl: `${host}/api/login`,
   }
 };
 

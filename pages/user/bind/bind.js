@@ -1,4 +1,8 @@
 // pages/user/bind/bind.js
+
+var ATAPI = require('../../../api/AssistantToolsAPI.js')
+var Util = require('../../../utils/util.js')
+var app = getApp();
 Page({
 
   /**
@@ -15,13 +19,13 @@ Page({
     //判断用户输入是否完整
     var inputComplete = true;
     var tip = "";
-    if (!event.detail.value.jobId && !event.detail.value.idCardNo){
+    if (!event.detail.value.userName && !event.detail.value.password){
       tip = '请输入用户名和密码';
       inputComplete = false;
-    } else if (!event.detail.value.jobId){
+    } else if (!event.detail.value.userName){
       tip = '请输入用户名';
       inputComplete = false;
-    } else if (!event.detail.value.idCardNo){
+    } else if (!event.detail.value.password){
       tip = '请输入密码';
       inputComplete = false;
     }
@@ -32,7 +36,48 @@ Page({
         icon: "none",
       })
     } else {
-      //调用API向服务器请求平台账号绑定
+      wx.showLoading({
+        title: '平台账号绑定中',
+        mask: true,
+        success: res => {
+
+          //调用API向服务器请求平台账号绑定
+          ATAPI.bind({
+            userName: event.detail.value.userName,
+            password: event.detail.value.password,
+            success: data => {
+              wx.hideLoading();
+              if (data.error) {
+                //绑定失败
+                wx.showToast({
+                  title: '绑定失败: ' + data.error,
+                  icon: "none",
+                });
+              } else {
+                //绑定成功
+                wx.showToast({
+                  title: '绑定成功',
+                  icon: "success",
+                  duration: 1500,
+                });
+
+                //设置app中的全局变量userIsBinded = true
+                app.globalData.userIsBinded = true;
+                //跳转回用户页面
+                setTimeout(function () {
+                  wx.reLaunch({
+                    url: '/pages/user/user',
+                  })
+                }, 1500);
+              }
+            },
+            fail: error => {
+              wx.hideLoading();
+              Util.showModel("绑定失败", error);
+            }
+          });
+        }
+      })
     }
   },
 

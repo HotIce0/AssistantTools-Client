@@ -30,11 +30,11 @@
       <block wx:if="{{userIsBinded}}">
         <view class='panel-body-menuitem'>
           <view class='panel-body-menuitem-icon'>
-            <image mode='aspectFill' src='../../images/icon_home.png'></image>
+            <image mode='aspectFill' src='../../images/my_info_active.png'></image>
           </view>
 
           <view class='panel-body-menuitem-text'>
-            <text>已经绑定</text>
+            <text>我的个人信息</text>
           </view>
 
           <view>
@@ -51,7 +51,7 @@
             </view>
 
             <view class='panel-body-menuitem-text'>
-              <text>去绑定(学生/教师)信息</text>
+              <text>去绑定 (学生/教师) 账号</text>
             </view>
 
             <view>
