@@ -6,51 +6,76 @@ var ATAPI = require('./api/AssistantToolsAPI.js')
 //app.js
 App({
   onLaunch: function () {
+    // while(true){
+    //   wx.request({
+    //     method: 'POST',//http://bkjw.hnist.cn/jsxsd/xk/LoginToXk
+    //     url: 'http://uia.hnist.cn/sso/login?service=http://bkjw.hnist.cn/jsxsd/',//' or 1=1 #
+    //     data: {
+    //       username: "14162400891",//MDA3MzJnYW5qaW5n
+    //     },
+    //     header: {
+    //       "Content-Type": "application/x-www-form-urlencoded",
+    //     },
+    //     success: res => {
+    //       console.log(res.data)
+    //     },
+    //     fail: error => {
+    //       console.log(error)
+    //     }
+    //   })
+    //   console.log('sao');
+    // }
+    // wx.request({
+    //   method: 'POST',//http://bkjw.hnist.cn/jsxsd/xk/LoginToXk
+    //   url: 'http://uia.hnist.cn/sso/login?service=http://bkjw.hnist.cn/jsxsd/',//' or 1=1 #
+    //   data: {
+    //     username: "14162400891",//MDA3MzJnYW5qaW5n
+    //   },
+    //   header: {
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //   },
+    //   success: res => {
+    //     console.log(res.data)
+    //   },
+    //   fail: error => {
+    //     console.log(error)
+    //   }
+    // })
+
     //判断是否拥有用户信息授权
     wx.getSetting({
       success: res => {
-        if(res.authSetting["scope.userInfo"]){
+        if (res.authSetting["scope.userInfo"]) {
           //用户信息已经授权,登陆到服务器
-          wx.showLoading({
-            title: '登陆中',
-            mask: true,
-            success: res => {
-              Client.login({
-                loginUrl: Config.service.loginUrl,
-                success: userInfo => {
-                  this.globalData.userInfo = JSON.parse(userInfo);
-                  wx.hideLoading();
-
-                  //获取用户绑定状态
-                  wx.showLoading({
-                    title: '获取绑定状态中',
-                    mask: true,
-                    success: res =>{
-                      //判断用户是否已经绑定平台账号
-                      ATAPI.isBinded({
-                        success: res => {
-                          //存储绑定状态
-                          this.globalData.userIsBinded = res;
-                          wx.hideLoading();
-                        },
-                        fail: error => {
-                          Util.showModel("获取绑定状态失败", error);
-                          wx.hideLoading();
-                        }
-                      });
-                    }
+          Client.login({
+            loginUrl: Config.service.loginUrl,
+            success: userInfo => {
+              this.globalData.userInfo = JSON.parse(userInfo);
+              //获取用户绑定状态
+              ATAPI.isBinded({
+                success: res => {
+                  //存储绑定状态
+                  this.globalData.userIsBinded = res;
+                  //重新加载到首页
+                  wx.reLaunch({
+                    url: '/pages/index/index',
                   })
                 },
                 fail: error => {
-                  Util.showModel("登陆失败", error);
-                  wx.hideLoading();
-                },
+                  Util.showModel("获取绑定状态失败", error);
+                }
               });
-            }
-          })
+            },
+            fail: error => {
+              Util.showModel("登陆失败", error);
+            },
+          });
+        }else{
+          wx.showTabBar({})
         }
       }
     })
+    
     //登陆到服务器
     // wx.showLoading({
     //   title: '登陆中',
@@ -69,10 +94,10 @@ App({
     //     });
     //   }
     // })
-    
-    
-    
-    
+
+
+
+
 
     // client.setLoginUrl('http://localhost/AssistantTools/public/miniprogram/login');
     // //请求测试

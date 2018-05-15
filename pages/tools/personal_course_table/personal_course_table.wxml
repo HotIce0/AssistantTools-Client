@@ -1,0 +1,50 @@
+<!--pages/tools/personal_course_table/personal_course_table.wxml-->
+
+<!-- CoursesTable SWIPER START -->
+<swiper style='height: 750rpx;' current="{{swiperCurrent}}" circular="true" indicator-dots="true">
+  <swiper-item wx:for="{{parseCourses}}" wx:key="*this" wx:for-item="day">
+    <scroll-view class='panel' scroll-y="true" style='height: 750rpx;'>
+      <view class='panel-header'>
+        <text>星期{{weekShow[index]}}</text>
+      </view>
+      <view class='panel-body'>
+        <!-- CoursesTable SECTIONS START -->
+        <block wx:for="{{day}}" wx:key="*this" wx:for-item="section" wx:for-index="sectionIndex">
+          <view class='courseItem'>
+            <text class='courseSection'>第{{sectionIndex}}节</text>
+            <block wx:for="{{section}}" wx:key="*this">
+              <text class='courseInfo'>{{item.course_name}}\n{{item.teacher_name}}\n{{item.position}}\n{{item.weekth}}\n</text>
+            </block>
+          </view>
+        </block>
+        <!-- CoursesTable SECTIONS END -->
+      </view>
+    </scroll-view>
+  </swiper-item>
+</swiper>
+<!-- CoursesTable SWIPER END -->
+<!-- CoursesTable OPERATOR START -->
+<view class='panel'>
+  <view class='panel-body-flex-row'>
+    <view class='formYear'>
+      <picker name='year' style='width: 162rpx;' mode="date" fields="year" bindchange="bindYearPickerChange" start="1999" end="10000" value="{{year}}">
+        <text>{{year}}年</text>
+      </picker>
+      <view class='bottom-arrow'></view>
+    </view>
+
+    <view class='formTerm'>
+      <picker name='term' style='width: 162rpx;' mode="selector" range="{{terms}}" bindchange="bindTermPickerChange" value="{{term}}">
+        <text>{{terms[term]}}</text>
+      </picker>
+      <view class='bottom-arrow'></view>
+    </view>
+
+    <view class='formLatest'>
+      <text>获取最新</text>
+      <switch name='needLastest' bindchange="switchNeedLatestChanged" />
+    </view>
+
+  </view>
+</view>
+<!-- CoursesTable OPERATOR END -->

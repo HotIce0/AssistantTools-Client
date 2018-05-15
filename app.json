@@ -6,7 +6,8 @@
     "pages/tools/index",
     "pages/user/bind/bind",
     "pages/logs/logs",
-    "pages/tools/attendance-record/attendance_record"
+    "pages/tools/attendance_record/attendance_record",
+    "pages/tools/personal_course_table/personal_course_table"
   ],
   "window": {
     "backgroundTextStyle": "light",

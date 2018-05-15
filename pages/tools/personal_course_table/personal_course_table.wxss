@@ -1,0 +1,93 @@
+/* pages/tools/personal_course_table/personal_course_table.wxss */
+page {
+  background: #F2F2F2;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel{
+  background: #FFFFFF;
+}
+
+.panel .panel-header{
+  background: #FFFFFF;
+  padding: 8rpx; 
+  border-left: 8rpx solid #ccc!important;
+  border-color: #0099FF!important;
+  margin: 10rpx;
+  width: 100%;
+  font-size: 45rpx;
+  text-align: center;
+}
+
+.panel .panel-body{
+  width: 100%;
+  padding: 0rpx 30rpx 0rpx 30rpx;
+  background: #FFFFFF;
+  font-size: 35rpx;
+}
+
+.panel .panel-body{
+  width: 100%;
+  padding: 0rpx 30rpx 0rpx 30rpx;
+  background: #FFFFFF;
+  font-size: 35rpx;
+}
+
+.panel .panel-body .courseItem{
+  display: flex;
+  flex-direction: row;
+  border: 1rpx solid;
+  width: 690rpx;
+}
+
+.panel .panel-body .courseItem .courseSection{
+  border-right: 0.1rpx solid;
+  width: 138rpx;
+  text-align: center;
+  font-size: 45rpx;
+}
+
+.panel .panel-body .courseItem .courseInfo{
+  width: 552rpx;
+}
+
+.panel .panel-body-flex-row{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 0rpx 30rpx 0rpx 30rpx;
+  background: #FFFFFF;
+  font-size: 35rpx;
+}
+
+.panel .panel-body-flex-row .formYear{
+  display: flex;
+  flex-direction: row;
+  margin-top: 30rpx;
+  width: 187rpx;
+  font-size: 40rpx;
+}
+
+.panel .panel-body-flex-row .formTerm{
+  display: flex;
+  flex-direction: row;
+  margin-top: 30rpx;
+  width: 187rpx;
+  font-size: 40rpx;
+}
+
+.panel .panel-body-flex-row .formLatest{
+  margin-top: 25rpx;
+  width: 374rpx;
+  font-size: 40rpx;
+}
+
+.bottom-arrow{
+  margin: 10rpx 20rpx 0rpx 0rpx;
+  width: 25rpx;
+  height: 25rpx;
+  border-top: 2rpx solid #0099FF;
+  border-right: 2rpx solid #0099FF;
+  transform: rotate(135deg);
+}

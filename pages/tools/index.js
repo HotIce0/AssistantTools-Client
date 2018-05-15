@@ -15,6 +15,15 @@ Page({
     interval: 2000,
     duration: 500
   },
+  /**
+   * 跳转到某个具体功能页面的Tap事件处理
+   * Remark：控件的ID号必须与功能目录名和功能page js名称一致
+   */
+  navigateToToolPage: function(event) {
+    wx.navigateTo({
+      url: '/pages/tools/' + event.target.id + '/' + event.target.id,
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载

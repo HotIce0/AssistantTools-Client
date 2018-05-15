@@ -5,7 +5,7 @@
   <view class='panel'>
     <view class='panel-body'>
       <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-        <block wx:for="{{imgUrls}}">
+        <block wx:for="{{imgUrls}}" wx:key="*this">
           <swiper-item>
             <image src="{{item}}" class="slide-image" height="150rpx" mode='scaleToFill' style='width:750rpx'/>
           </swiper-item>
@@ -39,7 +39,9 @@
     </view>
 
     <view class='panel-body'>
-      <image class='tool-item' src='../../images/icon_all.png'></image>
+      <image id='attendance_record' class='tool-item' src='../../images/icon_all.png' bindtap='navigateToToolPage'></image>
+      <image id='personal_course_table' class='tool-item' src='../../images/icon_all.png' bindtap='navigateToToolPage'></image>
+
       <image class='tool-item' src='../../images/icon_all.png'></image>
       <image class='tool-item' src='../../images/icon_all.png'></image>
       <image class='tool-item' src='../../images/icon_all.png'></image>
