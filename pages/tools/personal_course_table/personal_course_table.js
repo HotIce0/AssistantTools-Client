@@ -38,6 +38,13 @@ Page({
           Util.showModel("获取个人课表失败 : ", data.error);
         }else{
           var parseCourses = JSON.parse(data.courses);
+          if (Object.keys(parseCourses).length === 0) {
+            wx.showToast({
+              title: "提示：您" + data.year + "年" + this.data.terms[data.term - 1] + "课程表数据不存在!",
+              icon: 'none',
+              duration: 2000
+            })
+          }
           //获取星期
           var date = new Date();
           var parseDay = [6, 0, 1, 2, 3, 4, 5];

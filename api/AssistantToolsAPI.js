@@ -35,20 +35,36 @@ var isBinded = function(options) {
 /**
  * 绑定平台账号
  * 参数：
- * userName
- * password
+ * isStudent: bool类型
+ * name
+ * jobId
+ * idCard
+ * class_id(当用户为学生时填写)
+ * college_id(当用户为教师时填写)
  */
 var bind = function(options) {
   options = Utils.extend({}, defaultOptions, options);
   //调用服务器平台账号绑定接口
+  var data = null;
+  if(options.isStudent){
+    data = {
+      "name": options.name,
+      "jobId": options.jobId,
+      "idCard": options.idCard,
+      "classID": options.class_id,
+    };
+  }else{
+    data = {
+      "name": options.name,
+      "jobId": options.jobId,
+      "idCard": options.idCard,
+      "collegeID": options.college_id,
+    };
+  }
   Client.request({
-    // /miniprogram/bind/bind
     url: Config.service.bind,
     method: "POST",
-    data: {
-      "userName": options.userName,
-      "password": options.password,
-    },
+    data: data,
     success: res => {
       var data = res.data;
       options.success(data);
@@ -90,10 +106,67 @@ var getPersonalCourseTableData = function(options) {
       options.fail(error);
     }
   });
-}
+};
+
+/**
+ * 获取学院列表
+ */
+var getColleges = function (options) {
+  options = Utils.extend({}, defaultOptions, options);
+  Client.request({
+    url: Config.service.getColleges,
+    success: res => {
+      options.success(JSON.parse(res.data.colleges));
+    },
+    fail: function (error) {
+      options.fail(error);
+    }
+  });
+};
+
+/**
+ * 获取专业列表
+ * 参数：
+ * college_id : 学院ID
+ */
+var getMajors = function (options) {
+  options = Utils.extend({}, defaultOptions, options);
+  var urlParam = '?college_id=' + options.college_id.toString();
+  Client.request({
+    url: Config.service.getMajors + urlParam,
+    success: res => {
+      options.success(JSON.parse(res.data.majors));
+    },
+    fail: function (error) {
+      options.fail(error);
+    }
+  });
+};
+
+/**
+ * 获取班级列表
+ * 参数：
+ * major_id : 专业ID
+ */
+var getClass = function (options) {
+  options = Utils.extend({}, defaultOptions, options);
+  var urlParam = '?major_id=' + options.major_id.toString();
+  Client.request({
+    url: Config.service.getClass + urlParam,
+    success: res => {
+      options.success(JSON.parse(res.data.class));
+    },
+    fail: function (error) {
+      options.fail(error);
+    }
+  });
+};
 
 module.exports = {
   isBinded: isBinded,
   bind: bind,
   getPersonalCourseTableData: getPersonalCourseTableData,
+  getColleges: getColleges,
+  getMajors: getMajors,
+  getClass: getClass,
 };

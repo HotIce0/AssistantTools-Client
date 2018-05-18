@@ -1,13 +1,48 @@
 <!--pages/user/bind/bind.wxml-->
+<!-- ROLE SELECT RADIO START  -->
 <view class='login-form'>
-
+  <!-- ROLE SELECT RADIO END  -->
   <form bindsubmit='doBind'>
+    <radio-group class="radio-group" bindchange="roleRadioChange">
+      <label>
+        <radio value="学生" checked="true" />学生
+      </label>
+      <label>
+        <radio value="教师" />教师
+      </label>
+    </radio-group>
     <view class='login-form-input'>
-      <input type='number' name="userName" focus='true' placeholder='用户名 (工号/学号)' maxlength='11'></input>
+      <label>
+        姓名
+        <input type='text' name="name" placeholder='请输入您的真实姓名'></input>
+      </label>
     </view>
     <view class='login-form-input'>
-      <input type='idcard' name="password" placeholder='密   码 (初始密码为身份证后六位)' password='true'></input>
+      <label>
+        学号/工号
+        <input type='number' name="jobId" placeholder='请输入学号/工号' maxlength='11'></input>
+      </label>
     </view>
+    <view class='login-form-input'>
+      <label>
+        身份证号码
+        <input type='idcard' name="idCard" placeholder='请输入身份证号码' maxlength='18'></input>
+      </label>
+    </view>
+    <!--STUDENT NEED SELECT TO CLASS  -->
+    <block wx:if="{{isStudent}}">
+      <label>学院<picker name='collegeValue' mode='selector' range='{{colleges}}' range-key='college_name' value='{{collegeValue}}' bindchange='pickerCollegeChanged'>{{colleges[collegeValue].college_name}}</picker>
+      </label>
+      <label>专业<picker mode='selector' range='{{majors}}' range-key='major_name' value='{{majorValue}}' bindchange='pickerMajorChanged'>{{majors[majorValue].major_name}}</picker>
+      </label>
+      <label>班级<picker name='classValue' mode='selector' range='{{class_s}}' range-key='class_name' value='{{classValue}}' bindchange='pickerClassChanged'>{{class_s[classValue].class_name}}</picker>
+      </label>
+    </block>
+    <!--TEACHER JUST NEED SELECT TO COLLEGE  -->
+    <block wx:else>
+      <label>学院<picker name='collegeValue' mode='selector' range='{{colleges}}' range-key='college_name' value='{{collegeValue}}' bindchange='pickerCollegeChanged'>{{colleges[collegeValue].college_name}}</picker>
+      </label>
+    </block>
     <view class='login-form-submit'>
       <button form-type='submit'>绑定</button>
     </view>

@@ -13,7 +13,7 @@
           <view class='courseItem'>
             <text class='courseSection'>第{{sectionIndex}}节</text>
             <block wx:for="{{section}}" wx:key="*this">
-              <text class='courseInfo'>{{item.course_name}}\n{{item.teacher_name}}\n{{item.position}}\n{{item.weekth}}\n</text>
+              <text class='courseInfo'>【{{item.course_name}}】\n【{{item.teacher_name}}】\n【{{item.position}}】\n【{{item.weekth}}】\n</text>
             </block>
           </view>
         </block>
