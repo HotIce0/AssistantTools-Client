@@ -1,0 +1,64 @@
+<view class="page">
+  <view class="page__bd">
+    <!-- SELECTE TIME START  -->
+    <view class="weui-cells__title">时间</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_select">
+
+        <view class="weui-cell__bd">
+          <picker name='year' mode="date" fields="year" bindchange="bindYearPickerChange" start="{{yearTermRange.start[0]}}" end="{{yearTermRange.end[0]}}" value="{{year}}">
+            <view class="weui-select weui-select_in-select-after">{{year}}年</view>
+          </picker>
+        </view>
+        <view class="weui-cell__bd">
+          <picker name='term' mode="selector" range="{{terms}}" bindchange="bindTermPickerChange" value="{{term}}">
+            <view class="weui-select weui-select_in-select-after">{{terms[term]}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_select">
+        <view class="weui-cell__bd">
+          <picker name='weekth' mode="selector" range="{{weekths}}" bindchange="bindWeekthPickerChange" value="{{weekth}}">
+            <view class="weui-select weui-select_in-select-after">第{{weekths[weekth]}}周</view>
+          </picker>
+        </view>
+        <view class="weui-cell__bd">
+          <picker name='week' mode="selector" range="{{weeks}}" bindchange="bindWeekPickerChange" value="{{week}}">
+            <view class="weui-select weui-select_in-select-after">{{weeks[week]}}</view>
+          </picker>
+        </view>
+
+      </view>
+    </view>
+    <!-- SELECTE TIME END  -->
+    <view class="weui-cells__title">考勤</view>
+    <!-- RECORD START  -->
+    <view class="weui-form-preview">
+      <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label" style="color:#000000">第一节</view>
+        </view>
+      </view>
+      <view class="weui-form-preview__bd">
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label" style="color:#000000">课程名称</view>
+          <view class="weui-form-preview__value">**</view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label" style="color:#000000">教师名称</view>
+          <view class="weui-form-preview__value">**</view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label" style="color:#000000">地点</view>
+          <view class="weui-form-preview__value">**</view>
+        </view>
+      </view>
+      <view class="weui-form-preview__ft">
+        <navigator url="" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">填写考勤信息</navigator>
+      </view>
+
+    </view>
+    <!-- RECORD END  -->
+  </view>
+</view>

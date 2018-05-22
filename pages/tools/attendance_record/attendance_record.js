@@ -1,11 +1,25 @@
 // pages/tools/attendance-record/attendance_record.js
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-  
+    menus: [
+      {
+        url: './inquire_record/inquire_record',
+        imgUrl: '../../../images/icon_all.png',
+        chName: '查询本班考勤记录',
+        hasNews: false,
+        newsCount: 0,
+      },
+      {
+        url: './attendance_record_show/attendance_record_show',
+        imgUrl: '../../../images/icon_all.png',
+        chName: '考勤登记',
+        hasNews: true,
+        newsCount: 1,
+      }
+    ],
   },
 
   /**

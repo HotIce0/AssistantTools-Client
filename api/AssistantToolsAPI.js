@@ -110,6 +110,7 @@ var getPersonalCourseTableData = function(options) {
 
 /**
  * 获取学院列表
+ * 无参数
  */
 var getColleges = function (options) {
   options = Utils.extend({}, defaultOptions, options);
@@ -162,6 +163,52 @@ var getClass = function (options) {
   });
 };
 
+/**
+ * 获取学年学期范围
+ * 无参数
+ */
+var getYearTermRange = function (options) {
+  options = Utils.extend({}, defaultOptions, options);
+  Client.request({
+    url: Config.service.getYearTermRange,
+    success: res => {
+      options.success(res.data);
+    },
+    fail: function (error) {
+      options.fail(error);
+    }
+  });
+};
+/**
+ * 获取考勤信息
+ * 参数：
+ * year
+ * term
+ * weekth
+ * week
+ */
+var getAttendanceRecord = function (options) {
+  options = Utils.extend({}, defaultOptions, options);
+  //调用服务器考勤信息获取接口
+  Client.request({
+    url: Config.service.getAttendanceRecord,
+    method: "POST",
+    data: {
+      year: options.year,
+      term: options.term,
+      weekth: options.weekth,
+      week: options.week,
+    },
+    success: res => {
+      var data = res.data;
+      options.success(data);
+    },
+    fail: function (error) {
+      options.fail(error);
+    }
+  });
+};
+
 module.exports = {
   isBinded: isBinded,
   bind: bind,
@@ -169,4 +216,6 @@ module.exports = {
   getColleges: getColleges,
   getMajors: getMajors,
   getClass: getClass,
+  getYearTermRange: getYearTermRange,
+  getAttendanceRecord: getAttendanceRecord,
 };

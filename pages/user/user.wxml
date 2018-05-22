@@ -1,66 +1,59 @@
 <!--pages/user/user.wxml-->
-<scroll-view class='container-scroll'>
-  <!-- WX USERINFO BAR START  -->
+<block wx:if="{{!hasUserInfo}}">
+  <!--未登陆 START  -->
   <view class='userinfo-bar'>
-    <button id='btn-login' wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" style='width:750rpx;'>登陆</button>
-    <block wx:else>
-      <!--待添加 点击头像进入信息编辑页面  -->
-      <image bindtap='' class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text>{{userInfo.nickName}}</text>
-    </block>
+    <button id='btn-login' open-type="getUserInfo" bindgetuserinfo="getUserInfo" style='width:750rpx;'>登陆</button>
   </view>
-  <!-- WX USERINFO BAR END  -->
-  <!--未登录时  -->
-  <view wx:if="{{!hasUserInfo}}" class='panel'>
-    <view class='panel-body' style='margin-top:15rpx!important;'>
-      <view class='panel-body-menuitem'>
-        <view class='panel-body-menuitem-icon'>
-          <image mode='aspectFill' src='../../images/inform_active.png'></image>
-        </view>
-        <view class='panel-body-menuitem-text'>
-          <text>登陆后更多精彩内容!</text>
-        </view>
+  <!--未登陆 END  -->
+</block>
+<block wx:else>
+  <!--已登陆 START  -->
+
+  <!--个人头像 START  -->
+  <view class="weui-cells weui-cells_after-title">
+    <navigator style='background-color:#0099FF;' url="/pages/user/bind/bind" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+        <image src="{{userInfo.avatarUrl}}" style="width:128rpx;height:128rpx;border-radius:50%;" />
+        <!-- <view class="weui-badge" style="position: absolute;top: -.4em;right: -.4em;">8</view> -->
       </view>
-    </view>
+      <view class="weui-cell__bd">
+        <view>{{userInfo.nickName}}</view>
+        <view style="font-size: 12px;color: #FFA500;">{{userIsBinded ? "显示学号" : ""}}</view>
+      </view>
+    </navigator>
   </view>
-  <!--登陆后  -->
-  <view wx:else class='panel'>
-    <view class='panel-body' style='margin-top:15rpx!important;'>
-      <!--已经绑定用户信息  -->
-      <block wx:if="{{userIsBinded}}">
-        <view class='panel-body-menuitem'>
-          <view class='panel-body-menuitem-icon'>
-            <image mode='aspectFill' src='../../images/my_info_active.png'></image>
-          </view>
+  <!--个人头像 END  -->
 
-          <view class='panel-body-menuitem-text'>
-            <text>我的个人信息</text>
-          </view>
-
-          <view>
-            <view class='right-arrow'></view>
-          </view>
+  <block wx:if="{{userIsBinded}}">
+    <!--已绑定 START -->
+    <view class="weui-cells weui-cells_after-title">
+      <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__hd">
+          <image src="../../images/my_info_active.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
-      </block>
-      <!--未绑定用户信息  -->
-      <block wx:else>
-        <navigator url="/pages/user/bind/bind">
-          <view class='panel-body-menuitem'>
-            <view class='panel-body-menuitem-icon'>
-              <image mode='aspectFill' src='../../images/icon_home.png'></image>
-            </view>
-
-            <view class='panel-body-menuitem-text'>
-              <text>去绑定 (学生/教师) 账号</text>
-            </view>
-
-            <view>
-              <view class='right-arrow'></view>
-            </view>
-          </view>
-        </navigator>
-      </block>
+        <view class="weui-cell__bd">我的个人信息</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      </navigator>
     </view>
-  </view>
+    <!--已绑定 END -->
+  </block>
+  <block wx:else>
+    <!--未绑定 START -->
+    <view class="weui-cells weui-cells_after-title">
+      <navigator url="/pages/user/bind/bind" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__hd">
+          <image src="../../images/icon_home.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">绑定学生/教师账号</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      </navigator>
+    </view>
+    <!--未绑定 END -->
+  </block>
 
-</scroll-view>
+  <!--已登陆 END  -->
+</block>
+
+<view class="weui-footer">
+  <view class="weui-footer__text">由 SaoGuang 设计和编码 ❤ with WeUI</view>
+</view>

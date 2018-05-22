@@ -17,6 +17,13 @@ Page({
     classValue: 0,
 
     isStudent: true,
+
+    roleRadioItems: [
+      { name: "学生", value: "学生", checked: true},
+      { name: "教师", value: "教师", checked: false}
+    ],
+
+    isAgree: false,
   },
 
   /**
@@ -25,6 +32,15 @@ Page({
   onLoad: function (options) {
     //更新Picker列表数据
     this.updatePickersData();
+  },
+
+  /**
+   * 同意条款的状态监听
+   */
+  bindAgreeChange: function(even){
+    this.setData({
+      isAgree: !!even.detail.value.length
+    });
   },
 
   /**
@@ -162,8 +178,15 @@ Page({
    */
   roleRadioChange: function(even){
     var isStudent = even.detail.value == "教师" ? false : true;
+
+    var roleRadioItems = this.data.roleRadioItems;
+    for (var i = 0, len = roleRadioItems.length; i < len; ++i) {
+      roleRadioItems[i].checked = roleRadioItems[i].value == even.detail.value;
+    }
+
     this.setData({
       isStudent: isStudent,
+      roleRadioItems: roleRadioItems,
     })
   },
 
@@ -193,7 +216,13 @@ Page({
         title: tip,
         icon: "none",
       })
-    } else {
+    } else if (!this.data.isAgree){
+      //隐私说明验证
+      wx.showToast({
+        title: "请阅读并同意隐私说明!",
+        icon: "none",
+      })
+    }else{
       //获取college_id和class_id
       var college_id = this.data.colleges[this.data.collegeValue].college_id;
       var class_id = this.data.class_s[this.data.classValue].class_id;

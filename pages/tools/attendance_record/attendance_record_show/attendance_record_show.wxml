@@ -1,0 +1,29 @@
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-form-preview">
+      <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label" style="color:#000000">第一节</view>
+        </view>
+      </view>
+      <view class="weui-form-preview__bd">
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label" style="color:#000000">课程名称</view>
+          <view class="weui-form-preview__value">**</view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label" style="color:#000000">教师名称</view>
+          <view class="weui-form-preview__value">**</view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label" style="color:#000000">地点</view>
+          <view class="weui-form-preview__value">**</view>
+        </view>
+      </view>
+      <view class="weui-form-preview__ft">
+        <navigator url="" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">填写考勤信息</navigator>
+      </view>
+
+    </view>
+  </view>
+</view>

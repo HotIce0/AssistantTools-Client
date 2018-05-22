@@ -1,1 +1,4 @@
 /* pages/tools/attendance-record/attendance_record.wxss */
+.weui-form-preview{
+    margin-bottom: 25px;
+}

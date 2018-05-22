@@ -1,54 +1,18 @@
 <!--pages/tools/index.wxml-->
-<scroll-view class='container-scroll'>
 
-  <!--INFO SWIPERBOX START  -->
-  <view class='panel'>
-    <view class='panel-body'>
-      <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-        <block wx:for="{{imgUrls}}" wx:key="*this">
-          <swiper-item>
-            <image src="{{item}}" class="slide-image" height="150rpx" mode='scaleToFill' style='width:750rpx' />
-          </swiper-item>
-        </block>
-      </swiper>
+<view class="page">
+    <view class="page__hd">
+        <view class="page__title">小助手</view>
+        <view class="page__desc">全部助手</view>
     </view>
-  </view>
-  <!--INFO SWIPERBOX END  -->
-
-  <!--INFORM BOX START  -->
-  <view class='panel'>
-
-    <view class='panel-header'>
-      <text>提醒</text>
+    <view class="page__bd">
+        <view class="weui-grids">
+            <block wx:for="{{gridTools}}" wx:key="*this">
+                <navigator url="{{item.url}}" class="weui-grid" hover-class="weui-grid_active">
+                    <image class="weui-grid__icon" src="{{item.imgUrl}}" />
+                    <view class="weui-grid__label">{{item.chName}}</view>
+                </navigator>
+            </block>
+        </view>
     </view>
-
-    <view class='panel_body'>
-      <!--这里放一个通知的图标  -->
-      <!--这里从通知表中查出两条记录，并显示通知时间是多少之前  -->
-      <!--提供点击跳转到通知页面  -->
-      <text>测试提醒</text>
-    </view>
-  </view>
-  <!--INFORM BOX END  -->
-
-  <!-- TOOLBOX START  -->
-  <view class='panel'>
-
-    <view class='panel-header'>
-      <text>适合你的功能</text>
-    </view>
-
-    <view class='panel-body'>
-      <!--TOOLS START  -->
-      <image id='attendance_record' class='tool-item' src='../../images/icon_all.png' bindtap='navigateToToolPage'></image>
-      <image id='personal_course_table' class='tool-item' src='../../images/icon_all.png' bindtap='navigateToToolPage'></image>
-
-      <image class='tool-item' src='../../images/icon_all.png'></image>
-      <image class='tool-item' src='../../images/icon_all.png'></image>
-      <image class='tool-item' src='../../images/icon_all.png'></image>
-      <!--TOOLS END  -->
-    </view>
-
-  </view>
-  <!--TOOLBOX END   -->
-</scroll-view>
+</view>

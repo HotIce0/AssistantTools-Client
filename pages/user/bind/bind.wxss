@@ -1,19 +1,1 @@
 /* pages/user/bind/bind.wxss */
-page {
-  display: flex;
-  flex-direction: column;
-}
-
-.login-form{
-  width: 750rpx;
-  padding: 50rpx;
-}
-
-.login-form .login-form-input{
-  width: 650rpx;
-  border-bottom: 5rpx solid #C9CABB;
-}
-
-.login-form .login-form-submit{
-  width: 650rpx;
-}

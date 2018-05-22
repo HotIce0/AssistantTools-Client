@@ -7,7 +7,10 @@
     "pages/user/bind/bind",
     "pages/logs/logs",
     "pages/tools/attendance_record/attendance_record",
-    "pages/tools/personal_course_table/personal_course_table"
+    "pages/tools/personal_course_table/personal_course_table",
+    "pages/tools/attendance_record/save_record/save_record",
+    "pages/tools/attendance_record/inquire_record/inquire_record",
+    "pages/tools/attendance_record/attendance_record_show/attendance_record_show"
   ],
   "window": {
     "backgroundTextStyle": "light",

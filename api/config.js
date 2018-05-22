@@ -23,6 +23,10 @@ var config = {
     getMajors: `${host}/api/basicInfo/majors`,
     //GET获取班级列表，数据接口地址
     getClass: `${host}/api/basicInfo/class`,
+    //GET获取学年学期范围，数据接口地址
+    getYearTermRange: `${host}/api/basicInfo/getYearTermRange`,
+    //POST获取考勤记录，数据接口
+    getAttendanceRecord: `${host}/api/attendanceRecord/getAttendanceRecord`,
   }
 };
 

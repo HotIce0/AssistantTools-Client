@@ -1,10 +1,4 @@
 /* pages/user/user.wxss */
-page {
-  background: #F2F2F2;
-  display: flex;
-  flex-direction: column;
-}
-
 .container-scroll{
   width: 100%;
   height: 100%;
@@ -25,71 +19,4 @@ page {
   height: 128rpx;
   margin: 20rpx;
   border-radius: 50%;
-}
-
-.panel{
-  background: #FFFFFF;
-}
-
-.panel .panel-header{
-  padding: 8rpx; 
-  border-left: 8rpx solid #ccc!important;
-  border-color: #0099FF!important;
-  margin: 10rpx;
-  width: 100%;
-  font-size: 35rpx;
-}
-
-.panel .panel-body{
-  background: #FFFFFF;
-}
-
-/* tool图标 */
-.panel .panel-body .tool-item{
-  margin: 46.875rpx;/*46.875rpx;*/
-  height: 93.75rpx;
-  width: 93.75rpx;
-}
-
-.panel .panel-footer{
-  float: right;
-}
-
-/*列表菜单  */
-.panel .panel-body .panel-body-menuitem{
-  display: flex; 
-  flex-direction: row;
-  align-items: center;
-  height: 60rpx;
-  padding:10rpx 0rpx 10rpx 0rpx;
-  border-bottom: 0.01rpx solid;
-  border-color: #ccc; 
-}
-
-.panel .panel-body .panel-body-menuitem .panel-body-menuitem-icon{
-  width: 40rpx;
-  height: 40rpx;
-  margin: 0rpx 20rpx 0rpx 20rpx;
-}
-
-.panel .panel-body .panel-body-menuitem .panel-body-menuitem-icon image{
-  width:40rpx;
-  height:40rpx;
-}
-
-.panel .panel-body .panel-body-menuitem .panel-body-menuitem-text{
-  width: 625rpx;
-}
-
-.panel .panel-body .panel-body-menuitem .panel-body-menuitem-text text{
-  font-size: 30rpx;
-}
-
-.right-arrow{
-  margin: 0rpx 20rpx 0rpx 0rpx;
-  width: 25rpx;
-  height: 25rpx;
-  border-top: 2rpx solid #969393;
-  border-right: 2rpx solid #969393;
-  transform: rotate(45deg);
 }
