@@ -1,6 +1,9 @@
 var Config = require('./config.js')
 var Client = require('./../vendor/miniprogram-laravel-sdk/index.js')
 var Utils = require('./../vendor/miniprogram-laravel-sdk/lib/utils.js')
+var constants = require('./../vendor/miniprogram-laravel-sdk/lib/constants.js')
+var Session = require('./../vendor/miniprogram-laravel-sdk/lib/session.js')
+var utils = require('./../vendor/miniprogram-laravel-sdk/lib/utils.js');
 /**
  * 初始化API，设置登陆地址。用于调用Client.request时，登陆Session失效，能自动根据Client.setLoginUrl设置的地址重新登陆
  */
@@ -128,7 +131,7 @@ var getColleges = function (options) {
 /**
  * 获取专业列表
  * 参数：
- * college_id : 学院ID
+ * college_id : 学院ID(必须)
  */
 var getMajors = function (options) {
   options = Utils.extend({}, defaultOptions, options);
@@ -145,9 +148,9 @@ var getMajors = function (options) {
 };
 
 /**
- * 获取班级列表
+ * GET获取班级列表
  * 参数：
- * major_id : 专业ID
+ * major_id : 专业ID(必须)
  */
 var getClass = function (options) {
   options = Utils.extend({}, defaultOptions, options);
@@ -164,7 +167,7 @@ var getClass = function (options) {
 };
 
 /**
- * 获取学年学期范围
+ * GET获取学年学期范围
  * 无参数
  */
 var getYearTermRange = function (options) {
@@ -179,13 +182,48 @@ var getYearTermRange = function (options) {
     }
   });
 };
+
 /**
- * 获取考勤信息
+ * GET获取当前学年学期
+ * 无参数
+ */
+var getCurrentYearTerm = function (options) {
+  options = Utils.extend({}, defaultOptions, options);
+  Client.request({
+    url: Config.service.getCurrentYearTerm,
+    success: res => {
+      options.success(res.data);
+    },
+    fail: function (error) {
+      options.fail(error);
+    }
+  });
+};
+
+/**
+ * GET获取当前周次和星期
+ * 无参数
+ */
+var getCurrentWeekthWeek = function (options) {
+  options = Utils.extend({}, defaultOptions, options);
+  Client.request({
+    url: Config.service.getCurrentWeekthWeek,
+    success: res => {
+      options.success(res.data);
+    },
+    fail: function (error) {
+      options.fail(error);
+    }
+  });
+};
+
+/**
+ * POST获取考勤信息
  * 参数：
- * year
- * term
- * weekth
- * week
+ * year(必须)
+ * term(必须)
+ * weekth(必须)
+ * week(必须)
  */
 var getAttendanceRecord = function (options) {
   options = Utils.extend({}, defaultOptions, options);
@@ -209,6 +247,211 @@ var getAttendanceRecord = function (options) {
   });
 };
 
+/**
+ * 生成考勤信息
+ * 参数:
+ * year 学年(必须)
+ * term 学期(必须)
+ */
+var generateAttendanceRecord = function (options) {
+  options = Utils.extend({}, defaultOptions, options);
+  //调用服务器考勤信息生成接口
+  Client.request({
+    url: Config.service.generateAttendanceRecord,
+    method: "POST",
+    data: {
+      year: options.year,
+      term: options.term,
+    },
+    success: res => {
+      var data = res.data;
+      options.success(data);
+    },
+    fail: function (error) {
+      options.fail(error);
+    }
+  });
+}
+
+/**
+ * 考勤记录数据是否存在
+ * 参数:
+ * year 学年(必须)
+ * term 学期(必须)
+ */
+var isAttendanceRecordExist = function (options) {
+  options = Utils.extend({}, defaultOptions, options);
+  //调用服务器考勤数据是否存在 数据接口
+  Client.request({
+    url: Config.service.isAttendanceRecordExist,
+    method: "POST",
+    data: {
+      year: options.year,
+      term: options.term,
+    },
+    success: res => {
+      var data = res.data;
+      options.success(data.data);
+    },
+    fail: function (error) {
+      options.fail(error);
+    }
+  });
+}
+
+/**
+ * 图片上传接口
+ */
+var uploadFile = function(options){
+  options = Utils.extend({}, defaultOptions, options);
+  //构建认证头
+  var buildAuthHeader = function buildAuthHeader(session) {
+    var header = {};
+    if (session) {
+      header[constants.WX_HEADER_SKEY] = session;
+    }
+    return header;
+  };
+  var authHeader = buildAuthHeader(Session.get());
+  var originHeader = options.header || {};
+  return wx.uploadFile({
+    url: Config.service.uploadImgFile,
+    filePath: options.filePath,
+    name: options.name,
+    header: utils.extend({}, authHeader, originHeader),
+    formData: options.formData,
+    success: res => {
+      options.success(res);
+    },
+    fail: error => {
+      options.fail(error);
+    }
+  })
+}
+
+/**
+ * 图片地址，转化为url
+ * 参数:
+ * filePath
+ */
+var getDownloadImgFileUrl = function (options) {
+  options = Utils.extend({}, defaultOptions, options);
+  //调用服务器考勤信息生成接口
+  Client.request({
+    url: Config.service.getDownloadImgFileUrl,
+    method: "POST",
+    data: {
+      filePath: options.filePath
+    },
+    success: res => {
+      var data = res.data;
+      options.success(data);
+    },
+    fail: function (error) {
+      options.fail(error);
+    }
+  });
+}
+
+/**
+ * 图片下载接口
+ */
+var downloadFile = function (options) {
+  options = Utils.extend({}, defaultOptions, options);
+  //构建认证头
+  var buildAuthHeader = function buildAuthHeader(session) {
+    var header = {};
+    if (session) {
+      header[constants.WX_HEADER_SKEY] = session;
+    }
+    return header;
+  };
+  var authHeader = buildAuthHeader(Session.get());
+  var originHeader = options.header || {};
+  return wx.downloadFile({
+    url: options.url,
+    header: utils.extend({}, authHeader, originHeader),
+    success: res => {
+      options.success(res);
+    },
+    fail: error => {
+      options.fail(error);
+    }
+  })
+}
+
+
+/**
+ * 提交考勤数据
+ * 参数:
+ * attendance_record_id
+ * leavers_num
+ * leave_detail
+ * absenteeism_num
+ * absenteeism_detail
+ * mobile_num
+ * imgFilePath
+ */
+var saveAttendanceRecord = function (options) {
+  options = Utils.extend({}, defaultOptions, options);
+  //调用服务器考勤信息生成接口
+  console.log(options);
+  Client.request({
+    url: Config.service.saveAttendanceRecord,
+    method: "POST",
+    data: {
+      attendance_record_id: options.attendance_record_id,
+      leavers_num: options.leavers_num,
+      leave_detail: options.leave_detail,
+      absenteeism_num: options.absenteeism_num,
+      absenteeism_detail: options.absenteeism_detail,
+      mobile_num: options.mobile_num,
+      img_file_path: options.img_file_path,
+    },
+    success: res => {
+      var data = res.data;
+      options.success(data);
+    },
+    fail: function (error) {
+      options.fail(error);
+    }
+  });
+}
+
+/**
+ * 更新学年学期开学时间
+ * 无参数
+ */
+var updataSchoolStartDate = function (options) {
+  options = Utils.extend({}, defaultOptions, options);
+  Client.request({
+    url: Config.service.updataSchoolStartDate,
+    success: res => {
+      options.success(res.data);
+    },
+    fail: function (error) {
+      options.fail(error);
+    }
+  });
+};
+
+/**
+ * 获取拥有的权限的
+ * 无参数
+ */
+var getPermissions = function (options) {
+  options = Utils.extend({}, defaultOptions, options);
+  Client.request({
+    url: Config.service.getPermissions,
+    success: res => {
+      options.success(res.data);
+    },
+    fail: function (error) {
+      options.fail(error);
+    }
+  });
+};
+
 module.exports = {
   isBinded: isBinded,
   bind: bind,
@@ -217,5 +460,15 @@ module.exports = {
   getMajors: getMajors,
   getClass: getClass,
   getYearTermRange: getYearTermRange,
+  getCurrentYearTerm: getCurrentYearTerm,
+  getCurrentWeekthWeek: getCurrentWeekthWeek,
   getAttendanceRecord: getAttendanceRecord,
+  generateAttendanceRecord: generateAttendanceRecord,
+  isAttendanceRecordExist: isAttendanceRecordExist,
+  uploadFile: uploadFile,
+  saveAttendanceRecord: saveAttendanceRecord,
+  getDownloadImgFileUrl: getDownloadImgFileUrl,
+  downloadFile: downloadFile,
+  updataSchoolStartDate: updataSchoolStartDate,
+  getPermissions: getPermissions,
 };

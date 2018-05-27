@@ -1,0 +1,120 @@
+<view class="page">
+  <view class="page__bd">
+    <form bindsubmit='submitAttendanceRecord'>
+      <view class="weui-cells__title">课程信息</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">课程名称</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" value='{{attendanceRecord.course_name}}' disabled='true' />
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">教师名称</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" value='{{attendanceRecord.teacher_name}}' disabled='true' />
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">地点</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" value='{{attendanceRecord.position}}' disabled='true' />
+          </view>
+        </view>
+      </view>
+
+      <view class="weui-cells__title">旷课情况</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">旷课人数</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input name='leavers_num' type='number' class="weui-input" value='{{attendanceRecord.leavers_num}}' placeholder='请输入旷课人数' />
+          </view>
+        </view>
+
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">旷课情况</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input name='leavers_detail' class="weui-input" value='{{attendanceRecord.leave_detail}}' placeholder='请输入旷课情况' maxlength='512' />
+          </view>
+        </view>
+      </view>
+      <view class="weui-cells__title">请假情况</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">请假人数</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input name='absenteeism_num' type='number' class="weui-input" value='{{attendanceRecord.absenteeism_num}}' placeholder='请输入请假人数' />
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">请假情况</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input name='absenteeism_detail' class="weui-input" value='{{attendanceRecord.absenteeism_detail}}' placeholder='请输入请假情况' maxlength='512' />
+          </view>
+        </view>
+      </view>
+
+
+      <view class="weui-cells__title">手机袋情况</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_switch">
+          <view class="weui-cell__bd">是否有手机袋</view>
+          <view class="weui-cell__ft">
+            <switch name="hasMobileBag" bindchange='hasMobileBagChange' checked="{{hasMobileBag}}" />
+          </view>
+        </view>
+        <block wx:if="{{hasMobileBag}}">
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="weui-label">手机上交台数</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input name='mobile_num' type='number' value='{{attendanceRecord.mobile_num}}' class="weui-input" placeholder='请输入手机上交台数' />
+            </view>
+          </view>
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <view class="weui-uploader">
+                <view class="weui-uploader__hd">
+                  <view class="weui-uploader__title">手机情况图片上传</view>
+                  <view class="weui-uploader__info">{{files.length}}/1(长按重新上传)</view>
+                </view>
+                <view class="weui-uploader__bd">
+                  <view class="weui-uploader__files" id="uploaderFiles">
+                    <block wx:for="{{files}}" wx:key="*this">
+                      <view class="weui-uploader__file" bindtap="previewImage" bindlongtap='chooseImage' id="{{item}}">
+                        <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                      </view>
+                    </block>
+                  </view>
+                  <view wx:if="{{files.length==0}}" class="weui-uploader__input-box">
+                    <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+
+      <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" form-type='submit'>保存</button>
+      </view>
+    </form>
+  </view>
+</view>

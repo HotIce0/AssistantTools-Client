@@ -15,7 +15,7 @@ Page({
       {
         url: './attendance_record_show/attendance_record_show',
         imgUrl: '../../../images/icon_all.png',
-        chName: '考勤登记',
+        chName: '考勤情况统计',
         hasNews: true,
         newsCount: 1,
       }

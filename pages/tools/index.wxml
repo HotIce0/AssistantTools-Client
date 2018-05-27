@@ -1,18 +1,25 @@
 <!--pages/tools/index.wxml-->
 
 <view class="page">
-    <view class="page__hd">
-        <view class="page__title">小助手</view>
-        <view class="page__desc">全部助手</view>
-    </view>
-    <view class="page__bd">
-        <view class="weui-grids">
-            <block wx:for="{{gridTools}}" wx:key="*this">
-                <navigator url="{{item.url}}" class="weui-grid" hover-class="weui-grid_active">
-                    <image class="weui-grid__icon" src="{{item.imgUrl}}" />
-                    <view class="weui-grid__label">{{item.chName}}</view>
-                </navigator>
-            </block>
-        </view>
-    </view>
+  <view class="page__hd">
+    <view class="page__title">小助手</view>
+    <view class="page__desc">全部助手</view>
+  </view>
+  <view class="page__bd">
+    <block wx:if="{{app.globalData.userIsBinded}}">
+      <view class="weui-grids">
+        <block wx:for="{{gridTools}}" wx:key="*this">
+          <navigator url="{{item.url}}" class="weui-grid" hover-class="weui-grid_active">
+            <image class="weui-grid__icon" src="{{item.imgUrl}}" />
+            <view class="weui-grid__label">{{item.chName}}</view>
+          </navigator>
+        </block>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="weui-loadmore weui-loadmore_line">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">请先进行平台账号绑定</view>
+      </view>
+    </block>
+  </view>
 </view>

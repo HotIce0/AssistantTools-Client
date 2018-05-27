@@ -1,8 +1,8 @@
 {
   "pages": [
-    
     "pages/index/index",
     "pages/user/user",
+    "pages/user/admin",
     "pages/tools/index",
     "pages/user/bind/bind",
     "pages/logs/logs",

@@ -12,72 +12,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: {},
-    hasUserInfo: false,
-    userIsBinded: false,
+    app: app,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
   },
   /* 获取用户信息并登陆到服务器 */
   getUserInfo: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true,
-      })
-    } else {
-      //登陆到服务器
-      wx.showLoading({
-        title: '登陆中',
-        mask: true,
-        success: res => {
-          client.login({
-            loginUrl: Config.service.loginUrl,
-            success: userInfo => {
-              //存储用户信息
-              app.globalData.userInfo = JSON.parse(userInfo);
-              wx.hideLoading();
-              this.setData({
-                userInfo: app.globalData.userInfo,
-                hasUserInfo: true,
-              })
-
-              //获取用户绑定状态
-              wx.showLoading({
-                title: '获取绑定状态中',
-                mask: true,
-                success: res => {
-                  //判断用户是否已经绑定平台账号
-                  ATAPI.isBinded({
-                    success: res => {
-                      //保存绑定状态
-                      app.globalData.userIsBinded = res;
-                      this.setData({
-                        userIsBinded: true,
-                      })
-                      wx.hideLoading();
-                    },
-                    fail: error => {
-                      Util.showModel("获取绑定状态失败", error);
-                      wx.hideLoading();
-                    }
-                  });
-                }
-              })
-            },
-            fail: function (error) {
-              Util.showModel("登陆失败", error)
-              wx.hideLoading();
-            },
-          });
-        }
-      })
-    }
+    app.login();
   },
 
   /**
@@ -91,12 +36,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var hasUserInfo = app.globalData.userInfo ? true : false;
-    this.setData({
-      userInfo: app.globalData.userInfo,
-      hasUserInfo: hasUserInfo,
-      userIsBinded: app.globalData.userIsBinded,
-    })
+    
   },
 
   /**

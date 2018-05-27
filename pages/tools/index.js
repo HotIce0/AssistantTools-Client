@@ -1,29 +1,40 @@
 // pages/tools/index.js
+//获取应用实例
+var app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    gridTools: [
-      {
-        url: '/pages/tools/attendance_record/attendance_record',
-        chName: '考勤',
-        imgUrl: '../../images/icon_all.png',
-      },
-      {
-        url: '/pages/tools/personal_course_table/personal_course_table',
-        chName: '我的课程表',
-        imgUrl: '../../images/icon_all.png',
-      }
-    ],
+    gridTools: [],
+    app: app,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    //获取个人课程表的权限 1
+    if (app.globalData.permission[1]) {
+      this.setData({
+        gridTools: this.data.gridTools.concat([{
+          url: '/pages/tools/personal_course_table/personal_course_table',
+          chName: '我的课程表',
+          imgUrl: '../../images/course.png',
+        }])
+      })
+    }
+    //能考勤的基础权限 10
+    if (app.globalData.permission[10]) {
+      this.setData({
+        gridTools: this.data.gridTools.concat([{
+          url: '/pages/tools/attendance_record/attendance_record',
+          chName: '考勤',
+          imgUrl: '../../images/attendance.png',
+        }])
+      })
+    }
   },
 
   /**

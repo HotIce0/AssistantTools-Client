@@ -32,33 +32,62 @@
       </view>
     </view>
     <!-- SELECTE TIME END  -->
-    <view class="weui-cells__title">考勤</view>
-    <!-- RECORD START  -->
-    <view class="weui-form-preview">
-      <view class="weui-form-preview__hd">
-        <view class="weui-form-preview__item">
-          <view class="weui-form-preview__label" style="color:#000000">第一节</view>
+    <view class="weui-cells__title">考勤信息</view>
+    <block wx:if="{{attendanceRecords}}">
+      <block wx:if="{{!attendanceRecords.length}}">
+        <view class="weui-loadmore weui-loadmore_line">
+          <view class="weui-loadmore__tips weui-loadmore__tips_in-line">今天没有考勤记录</view>
         </view>
-      </view>
-      <view class="weui-form-preview__bd">
-        <view class="weui-form-preview__item">
-          <view class="weui-form-preview__label" style="color:#000000">课程名称</view>
-          <view class="weui-form-preview__value">**</view>
-        </view>
-        <view class="weui-form-preview__item">
-          <view class="weui-form-preview__label" style="color:#000000">教师名称</view>
-          <view class="weui-form-preview__value">**</view>
-        </view>
-        <view class="weui-form-preview__item">
-          <view class="weui-form-preview__label" style="color:#000000">地点</view>
-          <view class="weui-form-preview__value">**</view>
-        </view>
-      </view>
-      <view class="weui-form-preview__ft">
-        <navigator url="" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">填写考勤信息</navigator>
-      </view>
+      </block>
+      <!-- RECORD START  -->
+      <block wx:for="{{attendanceRecords}}" wx:for-index="indexAttendanceRecords" wx:for-item="attendanceRecord" wx:key="attendance_record_id">
 
-    </view>
-    <!-- RECORD END  -->
+        <view class="weui-cells__title"></view>
+        <view class="weui-form-preview">
+          <view class="weui-form-preview__hd">
+            <view class="weui-form-preview__item">
+              <view class="weui-form-preview__label" style="color:#000000">第{{sections[attendanceRecord.section]}}节</view>
+              <!-- 考勤记录状态1，代表未填写的记录  -->
+              <block wx:if="{{attendanceRecord.attendance_record_status==1}}">
+                <view class="weui-badge" style="margin-left: 5px;">未考勤</view>
+              </block>
+            </view>
+          </view>
+          <view class="weui-form-preview__bd">
+            <view class="weui-form-preview__item">
+              <view class="weui-form-preview__label" style="color:#000000">课程名称</view>
+              <view class="weui-form-preview__value">{{attendanceRecord.course_name}}</view>
+            </view>
+            <view class="weui-form-preview__item">
+              <view class="weui-form-preview__label" style="color:#000000">教师名称</view>
+              <view class="weui-form-preview__value">{{attendanceRecord.teacher_name}}</view>
+            </view>
+            <view class="weui-form-preview__item">
+              <view class="weui-form-preview__label" style="color:#000000">地点</view>
+              <view class="weui-form-preview__value">{{attendanceRecord.position}}</view>
+            </view>
+          </view>
+          <view class="weui-form-preview__ft">
+            <!-- 考勤记录状态1，代表未填写的记录  -->
+            <block wx:if="{{attendanceRecord.attendance_record_status==1}}">
+              <navigator url="./../save_record/save_record?mode=save&attendance_record_id={{attendanceRecord.attendance_record_id}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">填写考勤信息</navigator>
+            </block>
+            <!-- 考勤记录状态2，代表已填写的记录 3，代表因放假取消的的记录  -->
+            <block wx:elif="{{attendanceRecord.attendance_record_status==2 || attendanceRecord.attendance_record_status==3}}">
+              <navigator url="./../save_record/save_record?mode=alter&attendance_record_id={{attendanceRecord.attendance_record_id}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">修改考勤信息</navigator>
+            </block>
+          </view>
+        </view>
+      </block>
+      <!-- RECORD END  -->
+    </block>
+    <block wx:else>
+      <view class="weui-loadmore">
+        <view class="weui-loading"></view>
+        <view class="weui-loadmore__tips">正在加载考勤数据</view>
+      </view>
+    </block>
+
+
   </view>
 </view>
