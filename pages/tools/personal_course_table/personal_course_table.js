@@ -31,8 +31,10 @@ Page({
 
     //调用接口获取个人课表
     ATAPI.getPersonalCourseTableData({
-      latest: true,
-      current: true,
+      latest: false,
+      current: false,
+      year: app.globalData.currentYear,
+      term: app.globalData.currentTerm,
       success: data => {
         if(data.error){
           Util.showModel("获取个人课表失败 : ", data.error);

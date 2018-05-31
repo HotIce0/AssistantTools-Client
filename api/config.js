@@ -3,7 +3,7 @@
  */
 
 // 主机域名
-var host = 'http://192.168.0.100/AssistantTools/public';
+var host = 'http://120.79.53.18/AssistantTools/public';
 
 var config = {
   service: {

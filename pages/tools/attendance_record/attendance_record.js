@@ -7,14 +7,14 @@ Page({
     menus: [
       {
         url: './inquire_record/inquire_record',
-        imgUrl: '../../../images/icon_all.png',
+        imgUrl: '../../../images/attendance_record.png',
         chName: '查询本班考勤记录',
         hasNews: false,
         newsCount: 0,
       },
       {
         url: './attendance_record_show/attendance_record_show',
-        imgUrl: '../../../images/icon_all.png',
+        imgUrl: '../../../images/statistics.png',
         chName: '考勤情况统计',
         hasNews: true,
         newsCount: 1,
