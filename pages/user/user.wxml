@@ -17,7 +17,6 @@
       </view>
       <view class="weui-cell__bd">
         <view>{{app.globalData.userInfo.nickName}}</view>
-        <view style="font-size: 12px;color: #FFA500;">{{app.globalData.userIsBinded ? "显示学号" : ""}}</view>
       </view>
     </navigator>
   </view>
