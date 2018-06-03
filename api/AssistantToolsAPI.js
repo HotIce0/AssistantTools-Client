@@ -395,7 +395,6 @@ var downloadFile = function (options) {
 var saveAttendanceRecord = function (options) {
   options = Utils.extend({}, defaultOptions, options);
   //调用服务器考勤信息生成接口
-  console.log(options);
   Client.request({
     url: Config.service.saveAttendanceRecord,
     method: "POST",
@@ -452,6 +451,39 @@ var getPermissions = function (options) {
   });
 };
 
+/**
+ * 查询考勤统计
+ * 参数:
+ * year(必须)
+ * term(必须)
+ * weekth(必须)
+ * queryType(必须)1 查询指定学院的考勤统计信息,2 查询指定专业的考勤统计信息,3 查询指定班级的考勤统计信息
+ * ids(必须)
+ */
+var queryAttendanceRecordStatisticalData = function (options) {
+  options = Utils.extend({}, defaultOptions, options);
+  //调用服务器查询考勤统计接口
+  Client.request({
+    url: Config.service.queryAttendanceRecordStatisticalData,
+    method: "POST",
+    data: {
+      year: options.year,
+      term: options.term,
+      weekth: options.weekth,
+      queryType: options.queryType,
+      ids: options.ids,
+    },
+    success: res => {
+      var data = res.data;
+      options.success(data, options.key);
+    },
+    fail: function (error) {
+      options.fail(error);
+    }
+  });
+}
+
+
 module.exports = {
   isBinded: isBinded,
   bind: bind,
@@ -471,4 +503,5 @@ module.exports = {
   downloadFile: downloadFile,
   updataSchoolStartDate: updataSchoolStartDate,
   getPermissions: getPermissions,
+  queryAttendanceRecordStatisticalData, queryAttendanceRecordStatisticalData,
 };

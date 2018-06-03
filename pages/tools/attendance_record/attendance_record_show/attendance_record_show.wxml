@@ -1,5 +1,172 @@
 <view class="page">
   <view class="page__bd">
-  独秀：秀呀
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_select">
+        <view class="weui-cell__hd weui-cell__hd_in-select-after">
+          <view class="weui-label">学院</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker bindchange='pickerCollegeChanged' value='{{collegeValue}}' name='collegeValue' mode='selector' range='{{colleges}}' range-key='college_name'>
+            <view class="weui-select">{{colleges[collegeValue].college_name}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_select">
+        <view class="weui-cell__hd weui-cell__hd_in-select-after">
+          <view class="weui-label">专业</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker bindchange='pickerMajorChanged' value='{{majorValue}}' mode='selector' range='{{majors}}' range-key='major_name'>
+            <view class="weui-select">{{majors[majorValue].major_name}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_select">
+        <view class="weui-cell__hd weui-cell__hd_in-select-after">
+          <view class="weui-label">班级</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker bindchange='pickerClassChanged' value='{{classValue}}' name='classValue' mode='selector' range='{{class_s}}' range-key='class_name'>
+            <view class="weui-select">{{class_s[classValue].class_name}}</view>
+          </picker>
+        </view>
+      </view>
+    </view>
+    <!-- SELECTE TIME START  -->
+    <view class="weui-cells__title">时间</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_select">
+
+        <view class="weui-cell__bd">
+          <picker name='year' mode="date" fields="year" bindchange="bindYearPickerChange" start="{{yearTermRange.start[0]}}" end="{{yearTermRange.end[0]}}" value="{{year}}">
+            <view class="weui-select weui-select_in-select-after">{{year}}年</view>
+          </picker>
+        </view>
+        <view class="weui-cell__bd">
+          <picker name='term' mode="selector" range="{{terms}}" bindchange="bindTermPickerChange" value="{{term}}">
+            <view class="weui-select weui-select_in-select-after">{{terms[term]}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_select">
+        <view class="weui-cell__bd">
+          <picker name='weekth' mode="selector" range="{{weekths}}" bindchange="bindWeekthPickerChange" value="{{weekth}}">
+            <view class="weui-select weui-select_in-select-after">第{{weekths[weekth]}}周</view>
+          </picker>
+        </view>
+      </view>
+    </view>
+    <view class="weui-btn-area">
+      <button type="default" bindtap="query">查询考勤数据</button>
+    </view>
+    <!--考勤数据显示 START  -->
+    <block wx:if="{{collegesAttendanceStatistic.length > 0}}">
+      <block wx:for="{{collegesAttendanceStatistic}}" wx:key="*this">
+        <view class="weui-cells__title">{{colleges[index].college_name}} 学院的考勤情况</view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">应到人数</view>
+            <view class="weui-cell__ft">{{item.should_attendance_people_num}}</view>
+          </view>
+          <view class="weui-cell">
+            <view class="weui-cell__bd">实到人数</view>
+            <view class="weui-cell__ft">{{item.should_attendance_people_num - item.leavers_num_sum - item.absenteeism_num_sum}}</view>
+          </view>
+          <view class="weui-cell">
+            <view class="weui-cell__bd">旷课人数</view>
+            <view class="weui-cell__ft">{{item.leavers_num_sum}}</view>
+          </view>
+          <view class="weui-cell">
+            <view class="weui-cell__bd">请假人数</view>
+            <view class="weui-cell__ft">{{item.absenteeism_num_sum}}</view>
+          </view>
+          <view class="weui-cell">
+            <view class="weui-cell__bd">到课率</view>
+            <view class="weui-cell__ft">{{(1 - (item.leavers_num_sum + item.absenteeism_num_sum) / item.should_attendance_people_num) * 100}}%</view>
+          </view>
+        </view>
+      </block>
+    </block>
+    <block wx:if="{{collegeAttendanceStatistic.length > 0}}">
+      <block wx:for="{{collegeAttendanceStatistic}}" wx:key="*this">
+        <view class="weui-cells__title">{{majors[index].major_name}} 专业的考勤情况</view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">应到人数</view>
+            <view class="weui-cell__ft">{{item.should_attendance_people_num}}</view>
+          </view>
+          <view class="weui-cell">
+            <view class="weui-cell__bd">实到人数</view>
+            <view class="weui-cell__ft">{{item.should_attendance_people_num - item.leavers_num_sum - item.absenteeism_num_sum}}</view>
+          </view>
+          <view class="weui-cell">
+            <view class="weui-cell__bd">旷课人数</view>
+            <view class="weui-cell__ft">{{item.leavers_num_sum}}</view>
+          </view>
+          <view class="weui-cell">
+            <view class="weui-cell__bd">请假人数</view>
+            <view class="weui-cell__ft">{{item.absenteeism_num_sum}}</view>
+          </view>
+          <view class="weui-cell">
+            <view class="weui-cell__bd">到课率</view>
+            <view class="weui-cell__ft">{{(1 - (item.leavers_num_sum + item.absenteeism_num_sum) / item.should_attendance_people_num) * 100}}%</view>
+          </view>
+        </view>
+      </block>
+    </block>
+    <block wx:if="{{majorAttendanceStatistic.length > 0}}">
+      <block wx:for="{{majorAttendanceStatistic}}" wx:key="*this">
+        <view class="weui-cells__title">{{class_s[index].class_name}} 班的考勤情况</view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">应到人数</view>
+            <view class="weui-cell__ft">{{item.should_attendance_people_num}}</view>
+          </view>
+          <view class="weui-cell">
+            <view class="weui-cell__bd">实到人数</view>
+            <view class="weui-cell__ft">{{item.should_attendance_people_num - item.leavers_num_sum - item.absenteeism_num_sum}}</view>
+          </view>
+          <view class="weui-cell">
+            <view class="weui-cell__bd">旷课人数</view>
+            <view class="weui-cell__ft">{{item.leavers_num_sum}}</view>
+          </view>
+          <view class="weui-cell">
+            <view class="weui-cell__bd">请假人数</view>
+            <view class="weui-cell__ft">{{item.absenteeism_num_sum}}</view>
+          </view>
+          <view class="weui-cell">
+            <view class="weui-cell__bd">到课率</view>
+            <view class="weui-cell__ft">{{(1 - (item.leavers_num_sum + item.absenteeism_num_sum) / item.should_attendance_people_num) * 100}}%</view>
+          </view>
+        </view>
+      </block>
+    </block>
+    <block wx:if="{{classAttendanceStatistic !== null}}">
+      <view class="weui-cells__title">{{class_s[classValue].class_name}} 班的考勤情况</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">应到人数</view>
+          <view class="weui-cell__ft">{{classAttendanceStatistic.should_attendance_people_num}}</view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd">实到人数</view>
+          <view class="weui-cell__ft">{{classAttendanceStatistic.should_attendance_people_num - classAttendanceStatistic.leavers_num_sum - classAttendanceStatistic.absenteeism_num_sum}}</view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd">旷课人数</view>
+          <view class="weui-cell__ft">{{classAttendanceStatistic.leavers_num_sum}}</view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd">请假人数</view>
+          <view class="weui-cell__ft">{{classAttendanceStatistic.absenteeism_num_sum}}</view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd">到课率</view>
+          <view class="weui-cell__ft">{{(1 - (classAttendanceStatistic.leavers_num_sum + classAttendanceStatistic.absenteeism_num_sum) / classAttendanceStatistic.should_attendance_people_num) * 100}}%</view>
+        </view>
+      </view>
+    </block>
+    <!--考勤数据显示 END  -->
   </view>
 </view>

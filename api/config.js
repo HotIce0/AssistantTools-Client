@@ -3,7 +3,7 @@
  */
 
 // 主机域名
-var host = 'http://120.79.53.18/AssistantTools/public';
+var host = 'http://localhost/AssistantTools/public';
 
 var config = {
   service: {
@@ -45,6 +45,8 @@ var config = {
     updataSchoolStartDate: `${host}/api/basicInfo/updataSchoolStartDate`,
     //GET获取拥有的权限的，数据接口地址
     getPermissions: `${host}/api/basicInfo/getPermissions`,
+    //POST查询考勤统计，数据接口地址
+    queryAttendanceRecordStatisticalData: `${host}/api/attendanceRecord/queryAttendanceRecordStatisticalData`,
   }
 };
 
